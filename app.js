@@ -92,10 +92,28 @@ app.delete('/Details/:id',(req,res)=>{
 }else{
     res.status(400).json({"Error":"Invalid Object Id"})
 }
-
-
-
 })
+app.patch('/Details/:id',(req,res)=>{
+    const updates=req.body//updates will be an object with differenrt fields we want to update,these may be the full book details or may be the author ot the titile part..
+
+    //First an if check to check if it is a valid object id
+    if(ObjectId.isValid(req.params.id)){
+    db.collection('Details')
+    .updateOne({_id:new ObjectId(req.params.id)},{$set :updates})
+    .then(result=>{
+        res.status(200).json(result)
+    })
+    .catch(err=>{
+        res.status(500).json({error:'couldnot update'})
+    })
+}
+else{
+    return res.sendStatus(400);
+}
+    
+})
+
+
 
 app.listen(5500, () => {
             console.log("Listening at port 5500");
