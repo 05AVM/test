@@ -1,13 +1,13 @@
 const express = require('express');
 const { connectToDb, getDb } = require('./db');
-//const { ObjectId } = require('mongodb');
+const { ObjectId } = require('mongodb');
 //app.use(express.json());
 //const {ObjectId}=require('mongodb')
 //import {connectToDb,getDb} from './db.js'
 
 // initialize the app and middleware..
 const app = express();
-app.use(express.json())//pass any json coming in as a request so i can use it in my handler function..
+app.use(express.json());//pass any json coming in as a request so i can use it in my handler function..
 
 (async () => {
     try {
@@ -37,7 +37,7 @@ app.use(express.json())//pass any json coming in as a request so i can use it in
         });
         
 
-/*app.get('/Details/:id', async (req, res) => {
+app.get('/Details/:id', async (req, res) => {
     try {
         
         if (ObjectId.isValid(req.params.id)) {
@@ -54,8 +54,8 @@ app.use(express.json())//pass any json coming in as a request so i can use it in
         console.error(err);
         res.status(500).json({ error: 'Internal Server Error' });
     }
-});*/
-/*app.post('/Details', async (req, res) => {
+});
+app.post('/Details', async (req, res) => {
     //console.log(res.headersSent)
     //res.send('OK');
 
@@ -72,21 +72,30 @@ app.use(express.json())//pass any json coming in as a request so i can use it in
         res.status(500).json({ error: 'Could not insert document', details: err.message });
     }
 });
-
-app.delete('/books/id',(req,res)=>{
+//delete(inside this is the endpoint where the api will hit)
+//and then we send the result method back to the client as well 
+//and then we catch an error and give a status of 500 and if the the object id is not valid else part will execute ...
+//the working goes as we get a objectid using the id from the req parameter if its a valid one , we get the result back from mongo db with a status code of 200 then to  collection books and we will use the deleteone method to delete one method from the Details collection 
+app.delete('/Details/:id',(req,res)=>{
     //console.log(`Delete book with id ${req.params}`);
-    db.collection('books')
-    .deleteOne({_id: ObjectId(req.params.id)})
+    if( ObjectId.isValid(req.params.id))
+    {
+    db.collection('Details')
+    .deleteOne({_id: new ObjectId(req.params.id)})
     .then(result=>{
         res.status(200).json(result)
     })
+
     .catch(err=>{
         res.status(500).json({error:"Could not find the document"});
     })
+}else{
+    res.status(400).json({"Error":"Invalid Object Id"})
+}
 
 
 
-})*/
+})
 
 app.listen(5500, () => {
             console.log("Listening at port 5500");

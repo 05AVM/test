@@ -4,7 +4,6 @@ const { connectToDb, getDb } = require('./db');
 
 const app = express();
 app.use(express.json())
-
 (async () => {
     try {
         await connectToDb();
