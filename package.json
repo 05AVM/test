@@ -12,5 +12,6 @@
     "mongodb": "^5.7.0"
   },
   "main": "app.js",
+  "devDependencies": {},
   "description": ""
 }

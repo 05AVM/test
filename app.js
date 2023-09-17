@@ -1,6 +1,6 @@
 const express = require('express');
 const { connectToDb, getDb } = require('./db');
-const { ObjectId } = require('mongodb');
+//const { ObjectId } = require('mongodb');
 //app.use(express.json());
 //const {ObjectId}=require('mongodb')
 //import {connectToDb,getDb} from './db.js'
@@ -37,7 +37,7 @@ app.use(express.json())//pass any json coming in as a request so i can use it in
         });
         
 
-app.get('/Details/:id', async (req, res) => {
+/*app.get('/Details/:id', async (req, res) => {
     try {
         
         if (ObjectId.isValid(req.params.id)) {
@@ -54,8 +54,8 @@ app.get('/Details/:id', async (req, res) => {
         console.error(err);
         res.status(500).json({ error: 'Internal Server Error' });
     }
-});
-app.post('/Details', async (req, res) => {
+});*/
+/*app.post('/Details', async (req, res) => {
     //console.log(res.headersSent)
     //res.send('OK');
 
@@ -86,7 +86,7 @@ app.delete('/books/id',(req,res)=>{
 
 
 
-})
+})*/
 
 app.listen(5500, () => {
             console.log("Listening at port 5500");
